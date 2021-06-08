@@ -2,6 +2,7 @@
 
 use App\Models\Usuario;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Storage;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,4 +18,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     ddd(Usuario::all()[0]->roles[0]->permisos->pluck('descripcion'));
     return view('welcome');
+});
+
+Route::get('test', function() {
+    //Storage::disk('google')->put('test.txt', 'Hello World');
 });
