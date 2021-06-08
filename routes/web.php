@@ -16,23 +16,37 @@ use Illuminate\Support\Facades\Storage;
 */
 
 Route::get('/', function () {
-    ddd(Usuario::all()[0]->roles[0]->permisos->pluck('descripcion'));
     return view('welcome');
 });
 
-Route::get('test', function() {
-    // folder 1-Gv7j41Dl_p7uUhapI-7_DUa2sgc3l3u
-    // 1dYAj0I7H4Huxz3y3keBTfgPMpjcLmYTs
-    $file = Storage::disk('google')->files('');
+Route::get('/cargar', function() {
+  $pdf = app('dompdf.wrapper');
+  $pdf->loadHTML("<h1>hola mundo</h1>");
 
-    ddd(
-        $file
-    );
+  dd(
+    Storage::disk('google')->put('archivo.pdf', $pdf->output())
+  );
+});
+
+Route::get('/descargar/programa/{archivo}', function ($archivo) {
+  $rawData = Storage::cloud()->get($archivo);
+
+  return response($rawData, 200)
+      ->header('ContentType','application/pdf')
+      ->header('Content-Disposition', 'attachment; filename="'.$archivo.'.pdf');
+});
+
+Route::get('/archivo', function() {
+  $rawData = Storage::cloud()->get('13C22G6H1upqFGG7bEQ2PmIH6kRXBxGPp');
+
+  dd(
+    Storage::disk('local')->put('temp_prueba.pdf', $rawData)
+  );
 });
 
 // NOTAS:
 /*
--------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------++++++++++
 Storage::disk('google)->append('directorio', 'datos')
 
 Agrega más información al FINAL del archivo.
@@ -42,31 +56,31 @@ agrega la palabra 'holaa' como nueva linea del archivo '1dYAj0I7H4Huxz3y3keBTfgP
 Storage::disk('google)->prepend('directorio', 'datos')
 Agrega más información al INICIO del archivo.
 
--------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------++++++++++
 Storage::disk('google')->put('directorio', 'contenido');
 
 Sube un archivo a google drive
 Ejemplo: ->put('test.txt', 'Hello World'); // boolean
 
--------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------++++++++++
 Storage::disk('google')->copy('directorio original', 'nuevo directorio');
 
 Copia un archivo
 Ejemplo: ->copy('1dYAj0I7H4Huxz3y3keBTfgPMpjcLmYTs', 'copia_test.txt'); //boolean
 
--------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------++++++++++
 Storage::disk('google')->delete('directorio');
 
 Elimina un archivo
 Ejemplo: ->delete('1iZuPzWOCNqYZ6_muX3HdzToVXS0LZruF'); // boolean
 
--------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------++++++++++
 Storage::disk('google')->exists('directorio');
 
 Verifica si un archivo existe: BOOLEAN
 Ejemplo: ->exists('1dYAj0I7H4Huxz3y3keBTfgPMpjcLmYTs'); // boolean
 
--------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------++++++++++
 Storage::disk('google')->files('directorio', 'bool repercutivo');
 
 retorna los 'id' de todos los ARCHIVOS (acepta repercución) /no muestra carpetas
@@ -88,7 +102,7 @@ Storage::disk('google')->size('directorio');
 Devuelve el tamaño de un archivo en BYTES
 Ejemplo: ->size('1dYAj0I7H4Huxz3y3keBTfgPMpjcLmYTs'); // '28' bytes
 
--------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------++++++++++
 Storage::disk('google')->allFiles('directorio');
 
 Devuelve el todos los archivos
