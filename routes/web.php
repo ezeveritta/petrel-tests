@@ -23,7 +23,7 @@ Route::get('/', function () {
 Route::get('test', function() {
     // folder 1-Gv7j41Dl_p7uUhapI-7_DUa2sgc3l3u
     // 1dYAj0I7H4Huxz3y3keBTfgPMpjcLmYTs
-    $file = Storage::disk('google')->files('', false);
+    $file = Storage::disk('google')->files('');
 
     ddd(
         $file
