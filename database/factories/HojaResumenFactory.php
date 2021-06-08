@@ -22,7 +22,11 @@ class HojaResumenFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'url_pdf_rendimiento_acad' => '',
+            'url_pdf_plan_estudio' => '',
+            'url_pdf_programas' => '',
+            'url_pdf_nota_dpto_alum' => '',
+            'url_pdf_hoja_unida' => ''
         ];
     }
 }

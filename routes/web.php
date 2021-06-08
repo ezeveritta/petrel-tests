@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Usuario;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,5 +15,6 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
+    ddd(Usuario::all()[0]->roles[0]->permisos->pluck('descripcion'));
     return view('welcome');
 });

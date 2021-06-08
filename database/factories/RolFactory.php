@@ -13,6 +13,7 @@ class RolFactory extends Factory
      * @var string
      */
     protected $model = Rol::class;
+    protected $table = 'roles';
 
     /**
      * Define the model's default state.
@@ -22,7 +23,7 @@ class RolFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'descripcion' => $this->faker->unique()->word()
         ];
     }
 }

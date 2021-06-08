@@ -9,9 +9,15 @@ class Rol extends Model
 {
     use HasFactory;
     protected $fillable = ['descripcion'];
+    protected $table = 'roles';
 
-    public function rolPermisos()
+    public function permisos()
     {
-        return $this->belongsTo(RolPermisos::class);
+        return $this->belongsToMany(Permiso::class);
+    }
+
+    public function usuarios()
+    {
+        return $this->belongsToMany(Usuario::class);
     }
 }

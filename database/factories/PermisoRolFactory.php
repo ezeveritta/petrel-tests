@@ -2,17 +2,20 @@
 
 namespace Database\Factories;
 
-use App\Models\RolPermisos;
+use App\Models\Permiso;
+use App\Models\PermisoRol;
+use App\Models\Rol;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class RolPermisosFactory extends Factory
+class PermisoRolFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = RolPermisos::class;
+    protected $model = PermisoRol::class;
+    protected $table = 'permiso_rol';
 
     /**
      * Define the model's default state.
@@ -22,8 +25,8 @@ class RolPermisosFactory extends Factory
     public function definition()
     {
         return [
-            'rol_id' => 1,
-            'permiso_id' => 1,
+            'rol_id' => '',
+            'permiso_id' => '',
         ];
     }
 }

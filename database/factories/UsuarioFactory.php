@@ -22,7 +22,11 @@ class UsuarioFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'legajo' => $this->faker->unique()->word(),
+            'nombre' => $this->faker->firstName(),
+            'apellido' => $this->faker->lastName(),
+            'email' => $this->faker->unique()->email(),
+            'contrasenia' => '1234',
         ];
     }
 }

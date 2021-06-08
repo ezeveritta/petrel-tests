@@ -11,8 +11,8 @@ class Usuario extends Model
 
     protected $fillable = ['legajo', 'nombre', 'apellido', 'email', 'contrasenia'];
 
-    public function usuarioRol()
+    public function roles()
     {
-        return $this->belongsTo(UsuarioRol::class);
+        return $this->belongsToMany(Rol::class);
     }
 }

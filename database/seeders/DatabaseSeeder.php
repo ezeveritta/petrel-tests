@@ -4,9 +4,9 @@ namespace Database\Seeders;
 
 use App\Models\Permiso;
 use App\Models\Rol;
-use App\Models\RolPermisos;
+use App\Models\PermisoRol;
 use App\Models\Usuario;
-use App\Models\UsuarioRol;
+use App\Models\RolUsuario;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -31,15 +31,15 @@ class DatabaseSeeder extends Seeder
          Rol::factory()->create(['descripcion' => 'dept alumn']);
 
         /* Roles tiene permisos */
-         RolPermisos::factory()->create(['rol_id' => 1, 'permiso_id' => 2]); // 1 estudiante = 2 leer
-         RolPermisos::factory()->create(['rol_id' => 1, 'permiso_id' => 4]); // 1 estudiante = 4 subir
+         PermisoRol::factory()->create(['rol_id' => 1, 'permiso_id' => 2]); // 1 estudiante = 2 leer
+         PermisoRol::factory()->create(['rol_id' => 1, 'permiso_id' => 4]); // 1 estudiante = 4 subir
 
-         RolPermisos::factory()->create(['rol_id' => 2, 'permiso_id' => 1]); // 2 administrador = 1 escribir
-         RolPermisos::factory()->create(['rol_id' => 2, 'permiso_id' => 2]); // 2 administrador = 2 leer
-         RolPermisos::factory()->create(['rol_id' => 2, 'permiso_id' => 5]); // 2 administrador = 5 administrador
+         PermisoRol::factory()->create(['rol_id' => 2, 'permiso_id' => 1]); // 2 administrador = 1 escribir
+         PermisoRol::factory()->create(['rol_id' => 2, 'permiso_id' => 2]); // 2 administrador = 2 leer
+         PermisoRol::factory()->create(['rol_id' => 2, 'permiso_id' => 5]); // 2 administrador = 5 administrador
 
-         RolPermisos::factory()->create(['rol_id' => 3, 'permiso_id' => 2]); // 3 dept alumn = 2 leer
-         RolPermisos::factory()->create(['rol_id' => 3, 'permiso_id' => 4]); // 3 dept alumn = 4 subir
+         PermisoRol::factory()->create(['rol_id' => 3, 'permiso_id' => 2]); // 3 dept alumn = 2 leer
+         PermisoRol::factory()->create(['rol_id' => 3, 'permiso_id' => 4]); // 3 dept alumn = 4 subir
 
         /* USUARIOS */
          Usuario::factory()->create([
@@ -58,7 +58,7 @@ class DatabaseSeeder extends Seeder
          ]);
 
         /* USUARIO ROLES */
-         UsuarioRol::factory()->create(['usuario_legajo' => 1, 'rol_id' => 1]); // 1 Ezequiel = 1 estudiante
-         UsuarioRol::factory()->create(['usuario_legajo' => 2, 'rol_id' => 2]); // 2 Santiago = 2 administrador
+         RolUsuario::factory()->create(['usuario_id' => 1, 'rol_id' => 1]); // 1 Ezequiel = 1 estudiante
+         RolUsuario::factory()->create(['usuario_id' => 2, 'rol_id' => 2]); // 2 Santiago = 2 administrador
     }
 }

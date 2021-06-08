@@ -10,8 +10,8 @@ class Permiso extends Model
     use HasFactory;
     protected $fillable = ['descripcion'];
 
-    public function rolPermisos()
+    public function roles()
     {
-        return $this->belongsTo(RolPermisos::class);
+        return $this->belongsToMany(Rol::class);
     }
 }

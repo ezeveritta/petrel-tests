@@ -5,15 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class RolPermisos extends Model
+class RolUsuario extends Model
 {
     use HasFactory;
+    protected $fillable = ['usuario_legajo', 'rol_id'];
+    protected $table = 'rol_usuario';
 
-    protected $fillable = ['permiso_id', 'rol_id'];
-
-    public function permiso()
+    public function usuario()
     {
-        return $this->hasOne(Permiso::class);
+        return $this->hasOne(Usuario::class);
     }
 
     public function rol()

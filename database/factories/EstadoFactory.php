@@ -22,7 +22,7 @@ class EstadoFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'descripcion' => $this->faker->unique()->word()
         ];
     }
 }

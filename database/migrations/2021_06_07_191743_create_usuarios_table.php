@@ -14,10 +14,11 @@ class CreateUsuariosTable extends Migration
     public function up()
     {
         Schema::create('usuarios', function (Blueprint $table) {
-            $table->string('legajo')->primary();
+            $table->id();
+            $table->string('legajo')->unique();
             $table->string('nombre');
             $table->string('apellido');
-            $table->string('email');
+            $table->string('email')->unique();
             $table->string('contrasenia');
             $table->timestamps();
         });
