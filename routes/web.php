@@ -1,10 +1,10 @@
 <?php
 
-use App\Http\Controllers\ProgramaController;
-use App\Models\Usuario;
-use Illuminate\Support\Collection;
+use App\Http\Controllers\PlanEstudioController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
+
+use function PHPSTORM_META\map;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,11 +17,10 @@ use Illuminate\Support\Facades\Storage;
 |
 */
 
-Route::get('/', function () {  
-  dd(
-    ProgramaController::programas('', true)
-  );
-});
+Route::get('/subir_plan_a_gdrive', [PlanEstudioController::class, 'subir_planes_a_gdrive']);
+Route::get('/metadata_archivos', [PlanEstudioController::class, 'metadatos_archivos']);
+Route::get('/metadata_carpetas', [PlanEstudioController::class, 'metadatos_archivos']);
+Route::get('/ranquel', [PlanEstudioController::class, 'urls_ranquel']);
 
 Route::get('/cargar', function() {
   $pdf = app('dompdf.wrapper');
