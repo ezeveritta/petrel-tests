@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\PlanEstudioController;
+use App\Models\PlanEstudio;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
 
@@ -21,16 +22,10 @@ Route::get('/subir_plan_a_gdrive', [PlanEstudioController::class, 'subir_planes_
 Route::get('/metadata_archivos', [PlanEstudioController::class, 'metadatos_archivos']);
 Route::get('/metadata_carpetas', [PlanEstudioController::class, 'metadatos_archivos']);
 Route::get('/ranquel', [PlanEstudioController::class, 'urls_ranquel']);
+Route::get('/cargar_planes', [PlanEstudioController::class, 'cargar_planes']);
 
-Route::get('/cargar', function() {
-  $pdf = app('dompdf.wrapper');
-  $pdf->loadHTML(
-    "<h1>Hola mundo</h1>"
-  );
-
-  dd(
-    Storage::disk('google')->append('archivo4.pdf', $pdf->output())
-  );
+Route::get('/', function() {
+  
 });
 
 Route::get('/descargar/programa/{archivo}', function ($archivo) {

@@ -2,13 +2,89 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\PlanEstudio;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Collection;
 
 class PlanEstudioController extends Controller
 {
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        //
+    }
 
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        //
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        //
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\Models\PlanEstudio  $planEstudio
+     * @return \Illuminate\Http\Response
+     */
+    public function show(PlanEstudio $planEstudio)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  \App\Models\PlanEstudio  $planEstudio
+     * @return \Illuminate\Http\Response
+     */
+    public function edit(PlanEstudio $planEstudio)
+    {
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\PlanEstudio  $planEstudio
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, PlanEstudio $planEstudio)
+    {
+        //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Models\PlanEstudio  $planEstudio
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(PlanEstudio $planEstudio)
+    {
+        //
+    }
+
+    
     /**
      * Este método sube todos los pdf de los planes al gdrive en una estructura
      * similar a la usada con los programas
@@ -16,7 +92,7 @@ class PlanEstudioController extends Controller
     public static function subir_planes_a_gdrive()
     {
         # Obtener arreglo de csv
-        $csv = collect(array_map('str_getcsv', file(resource_path().'/oranquel2.csv')))
+        $csv = collect(array_map('str_getcsv', file(resource_path().'/OrdenanzasRanquel.csv')))
             ->map(fn($a) => implode('', $a))
             ->map(fn($a) => explode(';', $a));
 
@@ -109,16 +185,49 @@ class PlanEstudioController extends Controller
         );
     }
 
+    /**
+     * Muestra un arreglo con las url de los planes en Ranquel
+     */
     public static function urls_ranquel()
     {
         # Obtener arreglo de csv
-        $csv = collect(array_map('str_getcsv', file(resource_path().'/oranquel2.csv')))
+        $csv = collect(array_map('str_getcsv', file(resource_path().'/OrdenanzasRanquel.csv')))
+            ->map(fn($plan) => implode('', $plan))
+            ->map(fn($plan) => explode(';', $plan));
+
+        # Generar links de ranquel
+        ddd(
+            $csv->skip(1)->map(fn($plan) => 'https://ranquel.uncoma.edu.ar/archivos/'.$plan[6].'_'.$plan[3].'.pdf')
+        );
+    }
+
+    /**
+     * Este método carga los planes de estudio que están en el excel 'OrdenanzasRanquel.csv' a la Base de Datos
+     */
+    public static function cargar_planes()
+    {
+        # Obtener arreglo de csv
+        $csv = collect(array_map('str_getcsv', file(resource_path().'/OrdenanzasRanquel.csv')))
             ->map(fn($a) => implode('', $a))
             ->map(fn($a) => explode(';', $a));
 
         # Generar links de ranquel
-        dd(
-            $csv->map(fn($a) => 'https://ranquel.uncoma.edu.ar/archivos/'.$a[6].'_'.$a[3].'.pdf')
-        );
+        $links_ranquel = $csv->map(fn($a) => 'https://ranquel.uncoma.edu.ar/archivos/'.$a[6].'_'.$a[3].'.pdf');
+        
+        // Omitir el primer resultado
+        $csv->shift();
+        $links_ranquel->shift();
+
+        # cargar datos a bd
+        foreach ($csv as $key => $val) { // TODO: Debería usar los mismos campos que estan definidos en el excel? yo creo que si para no perder info
+            $plan = new PlanEstudio();
+            $plan->anio = $val[1];
+            $plan->nro_ordenanza = $val[0];
+            $plan->nro_gestion = $val[3];
+            $plan->gestion = $val[2];
+            $plan->url = $links_ranquel[$key];
+
+            $plan->save();
+        }
     }
 }
