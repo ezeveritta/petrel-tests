@@ -5,7 +5,7 @@ namespace Database\Factories;
 use App\Models\HojaResumen;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class HojaResumenFactory extends Factory
+class HojasResumenFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
@@ -13,6 +13,8 @@ class HojaResumenFactory extends Factory
      * @var string
      */
     protected $model = HojaResumen::class;
+
+    protected $table = 'hojas_resumen';
 
     /**
      * Define the model's default state.

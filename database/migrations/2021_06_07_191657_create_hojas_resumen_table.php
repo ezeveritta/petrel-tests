@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateHojaResumensTable extends Migration
+class CreateHojasResumenTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateHojaResumensTable extends Migration
      */
     public function up()
     {
-        Schema::create('hoja_resumens', function (Blueprint $table) {
+        Schema::create('hojas_resumen', function (Blueprint $table) {
             $table->id();
             $table->string('url_pdf_rendimiento_acad');
             $table->string('url_pdf_plan_estudio');
@@ -31,6 +31,6 @@ class CreateHojaResumensTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('hoja_resumens');
+        Schema::dropIfExists('hojas_resumen');
     }
 }

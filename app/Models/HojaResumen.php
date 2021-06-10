@@ -9,6 +9,7 @@ class HojaResumen extends Model
 {
     use HasFactory;
 
+    protected $table = 'hojas_resumen';
     protected $fillable = [
         'url_pdf_rendimiento_acad', 
         'url_pdf_plan_estudio',
@@ -16,4 +17,9 @@ class HojaResumen extends Model
         'url_pdf_nota_dpto_alum',
         'url_pdf_hoja_unida'
     ];
+
+    public function programas()
+    {
+        return $this->belongsToMany(Programa::class);
+    }
 }
