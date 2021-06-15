@@ -18,6 +18,8 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+         $this->call([PlanEstudioSeeder::class]);
+         
         /* PERMISOS */
          Permiso::factory()->create(['descripcion' => 'escribir']);
          Permiso::factory()->create(['descripcion' => 'leer']);
