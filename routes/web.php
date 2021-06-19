@@ -1,10 +1,10 @@
 <?php
 
+use App\Http\Controllers\NotaDptoAlumController;
 use App\Http\Controllers\PlanEstudioController;
-use App\Models\PlanEstudio;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\View\View;
 
 use function PHPSTORM_META\map;
 
@@ -92,7 +92,9 @@ Route::get('/rendimiento_academico', function() {
 
 Route::get('/obtener_plan/{plan}', [PlanEstudioController::class, 'obtener_plan']);
 
-Route::get('/', function() {
+Route::post('/generar_pdf_nota', [NotaDptoAlumController::class, 'generar_pdf'])->name('generar.pdf.nota');
+
+Route::get('/nota', function() {
   $data = [
     "UA" => [
       "Universidad" => "",
@@ -148,12 +150,27 @@ Route::get('/', function() {
     "FechaIngresoCarrera" => "05/02/2015",
     "Lugar" => "NEUQUEN"
   ];
-  
-  //return view('nota_dpt_alumno', ['datos' => $data]);
-
-  $pdf = app('dompdf.wrapper');
-
-  $pdf->loadView('nota_dpt_alumno', ['datos' => $data]);
-
-  return $pdf->stream('archivo.pdf');
+  return view('crear_nota', ['datos' => $data]);
 });
+
+Route::group(['middleware' => ['web']], function () {
+    Route::get('storage/{filename}', function ($filename) {
+        return Storage::get($filename);
+    });
+});
+
+Route::get('/test/{num}', function($num){
+  $url = '';
+  for ($i = 0; $i < 50; $i++) {
+      $url = 'https://ranquel.uncoma.edu.ar/archivos/ord_'.$num.'_'.$i.'.pdf';
+      if (existe($url)) break;
+  }
+
+  echo $url;
+});
+
+function existe($url) {
+  $file_headers = @get_headers($url);
+  if(!$file_headers || $file_headers[0] == 'HTTP/1.1 404 Not Found') return false;
+  return true;
+}

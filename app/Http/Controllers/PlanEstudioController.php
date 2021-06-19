@@ -196,7 +196,7 @@ class PlanEstudioController extends Controller
             ->map(fn($plan) => explode(';', $plan));
 
         # Generar links de ranquel
-        return(
+        dd (
             $csv->skip(1)->map(fn($plan) => 'https://ranquel.uncoma.edu.ar/archivos/'.$plan[6].'_'.$plan[3].'.pdf')
         );
     }
